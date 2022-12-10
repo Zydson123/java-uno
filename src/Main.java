@@ -108,37 +108,6 @@ public class Main {
                     }
 
                 }
-                else if(cardsForOpponent!=0 && blockForOpponent!=0){
-                    System.out.println("It's the turn of: " + player1.getName() + " he has " + cardsForOpponent + " cards to draw, if he doesnt use a + card he will draw the amount");
-                    Scanner scan = new Scanner(System.in);
-                    System.out.println("Choose your card (type in 2137 if you dont have/dont want to use your + cards)");
-                    print_hand(player1.getCards());
-                    int whichCard = scan.nextInt();
-                    whichCard--;
-                    if(whichCard==2136){
-                        int cardId2 = (int)(Math.random() * Deck.size());
-                        player1.getCards().add(Deck.get(cardId2));
-                            Deck.remove(Deck.get(cardId2));
-                            turn=player2;
-                    }
-                    else{
-                        Card chosenCard = player1.getCards().get(whichCard);
-                        if(chosenCard.getType()=="+2"){
-                            CardInCenter = chosenCard;
-                            cardsForOpponent+=2;
-                            turn = player2;
-                        }
-                        else{
-                            Scanner color = new Scanner(System.in);
-                            System.out.println("Choose the color (Red,Green,Blue,Yellow");
-                            String CardColor = scan.nextLine();
-                            CardInCenter = new Card("0",CardColor);
-                            cardsForOpponent+=4;
-                            player1.getCards().remove(chosenCard);
-                            turn = player2;
-                        }
-                    }
-                }
                 else {
                     System.out.println("It's the turn of: " + player1.getName());
                     System.out.println("Your hand: ");
