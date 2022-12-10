@@ -32,8 +32,10 @@ public class Main {
                 cardId = (int)(Math.random() * Deck.size());
             }
         }
-        CardInCenter = Deck.get(0);
         while (true) {
+            if(Deck.size()==0){
+                card.fillDeck(Deck);
+            }
             if(player1.getCards().size()==0){
                 System.out.println(player1.getName() + " Wins!");
                 break;

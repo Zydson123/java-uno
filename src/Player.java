@@ -2,12 +2,10 @@ import java.util.ArrayList;
 
 public class Player {
     private ArrayList<Card> Cards = new ArrayList<Card>();
-    private int id;
     private String Name;
 
     public Player(String name) {
         this.Name = name;
-        this.id++;
     }
     public void giveCards(ArrayList<Card> Deck, Player player){
         int cardId = (int)(Math.random() * Deck.size());
