@@ -13,7 +13,11 @@ public class Card {
     }
 
     public void fillDeck(ArrayList<Card> Deck){
-        for(int i=0; i<9; i++){
+        Deck.add(new Card(String.valueOf(0),"Red"));
+        Deck.add(new Card(String.valueOf(0),"Green"));
+        Deck.add(new Card(String.valueOf(0),"Blue"));
+        Deck.add(new Card(String.valueOf(0),"Yellow"));
+        for(int i=1; i<9; i++){
                 Deck.add(new Card(String.valueOf(i),"Red"));
                 Deck.add(new Card(String.valueOf(i),"Red"));
                 Deck.add(new Card(String.valueOf(i),"Green"));
