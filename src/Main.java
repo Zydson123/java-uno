@@ -57,6 +57,9 @@ public class Main {
                         turn = player2;
                         blockForOpponent--;
                     }
+                    else if(whichCard+1>player1.getCards().size()){
+                        System.out.println("You only have: " + player1.getCards().size() + " cards!");
+                    }
                     else {
                             Card chosenCard = player1.getCards().get(whichCard);
                             if (chosenCard.getType() == "Block") {
@@ -64,7 +67,7 @@ public class Main {
                                 blockForOpponent++;
                                 turn = player2;
                             }
-                            else if (player2.getCards().get(whichCard).getType() != "Block") {
+                            else if (player1.getCards().get(whichCard).getType() != "Block") {
                                 System.out.println("This is not a card you can use!");
                             }
                         }
@@ -85,6 +88,9 @@ public class Main {
                         }
                         turn=player2;
                     }
+                    else if(whichCard+1>player1.getCards().size()){
+                        System.out.println("You only have: " + player1.getCards().size() + " cards!");
+                    }
                     else{
                         Card chosenCard = player1.getCards().get(whichCard);
                             if(chosenCard.getType()=="+2"){
@@ -97,10 +103,15 @@ public class Main {
                                 Scanner color = new Scanner(System.in);
                                 System.out.println("Choose the color (Red,Green,Blue,Yellow");
                                 String CardColor = color.nextLine();
-                                CardInCenter = new Card("0",CardColor);
-                                cardsForOpponent+=4;
-                                player1.getCards().remove(chosenCard);
-                                turn = player2;
+                                if(CardColor=="Red" || CardColor=="Green" || CardColor=="Blue" || CardColor=="Yellow"){
+                                    CardInCenter = new Card("0", CardColor);
+                                    player2.getCards().remove(chosenCard);
+                                    cardsForOpponent+=4;
+                                    turn = player2;
+                                }
+                                else{
+                                    System.out.println("This is not a valid color");
+                                }
                             }
                             else{
                                 System.out.println("You can't use this card to counter the + card!");
@@ -122,6 +133,9 @@ public class Main {
                         Deck.remove(Deck.get(cardId2));
                         turn = player2;
                     }
+                    else if(whichCard+1>player1.getCards().size()){
+                        System.out.println("You only have: " + player1.getCards().size() + " cards!");
+                    }
                     else {
                         Card chosenCard = player1.getCards().get(whichCard);
                         if (chosenCard.getType() == CardInCenter.getType() || chosenCard.getColor() == CardInCenter.getColor() || chosenCard.getColor() == "None") {
@@ -130,18 +144,28 @@ public class Main {
                                     Scanner color = new Scanner(System.in);
                                     System.out.println("Choose the color (Red,Green,Blue,Yellow");
                                     String CardColor = color.nextLine();
-                                    CardInCenter = new Card("0", CardColor);
-                                    player1.getCards().remove(chosenCard);
-                                    turn = player2;
+                                    if(CardColor=="Red" || CardColor=="Green" || CardColor=="Blue" || CardColor=="Yellow"){
+                                        CardInCenter = new Card("0", CardColor);
+                                        player2.getCards().remove(chosenCard);
+                                        turn = player2;
+                                    }
+                                    else{
+                                        System.out.println("This is not a valid color");
+                                    }
                                 }
                                 else if (chosenCard.getType() == "+4") {
                                     Scanner color = new Scanner(System.in);
                                     System.out.println("Choose the color (Red,Green,Blue,Yellow");
                                     String CardColor = color.nextLine();
-                                    CardInCenter = new Card("0", CardColor);
-                                    cardsForOpponent+=4;
-                                    player1.getCards().remove(chosenCard);
-                                    turn = player2;
+                                    if(CardColor=="Red" || CardColor=="Green" || CardColor=="Blue" || CardColor=="Yellow"){
+                                        CardInCenter = new Card("0", CardColor);
+                                        player2.getCards().remove(chosenCard);
+                                        cardsForOpponent+=4;
+                                        turn = player2;
+                                    }
+                                    else{
+                                        System.out.println("This is not a valid color");
+                                    }
                                 }
                             }
                             else if(chosenCard.getType()=="+2"){
@@ -185,6 +209,9 @@ public class Main {
                         blockForOpponent--;
                         turn=player1;
                     }
+                    else if(whichCard+1>player2.getCards().size()){
+                        System.out.println("You only have: " + player2.getCards().size() + " cards!");
+                    }
                     else {
                         Card chosenCard = player2.getCards().get(whichCard);
                         if (chosenCard.getType() == "Block") {
@@ -212,6 +239,9 @@ public class Main {
                         }
                         turn = player1;
                     }
+                    else if(whichCard+1>player2.getCards().size()){
+                        System.out.println("You only have: " + player2.getCards().size() + " cards!");
+                    }
                     else{
                         Card chosenCard = player2.getCards().get(whichCard);
                             if(chosenCard.getType()=="+2"){
@@ -224,17 +254,22 @@ public class Main {
                                 Scanner color = new Scanner(System.in);
                                 System.out.println("Choose the color (Red,Green,Blue,Yellow");
                                 String CardColor = color.nextLine();
-                                CardInCenter = new Card("0",CardColor);
-                                cardsForOpponent+=4;
-                                player2.getCards().remove(chosenCard);
-                                turn = player2;
+                                if(CardColor=="Red" || CardColor=="Green" || CardColor=="Blue" || CardColor=="Yellow"){
+                                    CardInCenter = new Card("0", CardColor);
+                                    player2.getCards().remove(chosenCard);
+                                    cardsForOpponent+=4;
+                                    turn = player1;
+                                }
+                                else{
+                                    System.out.println("This is not a valid color");
+                                }
                             }
                             else if(chosenCard.getType()!="2" || chosenCard.getType()!="+4"){
                                 System.out.println("You can't use this card to counter the + card!");
                             }
                         }
                     }
-                else if(cardsForOpponent==0 && blockForOpponent==0){
+                else{
                     System.out.println("It's the turn of: " + player2.getName());
                     System.out.println("Your hand: ");
                     print_hand(player2.getCards());
@@ -248,6 +283,9 @@ public class Main {
                         Deck.remove(Deck.get(cardId2));
                         turn = player1;
                     }
+                    else if(whichCard+1>player2.getCards().size()){
+                        System.out.println("You only have: " + player2.getCards().size() + " cards!");
+                    }
                     else{
                         Card chosenCard = player2.getCards().get(whichCard);
                         if (chosenCard.getType() == CardInCenter.getType() || chosenCard.getColor() == CardInCenter.getColor() || chosenCard.getColor() == "None") {
@@ -256,18 +294,28 @@ public class Main {
                                     Scanner color = new Scanner(System.in);
                                     System.out.println("Choose the color (Red,Green,Blue,Yellow");
                                     String CardColor = color.nextLine();
-                                    CardInCenter = new Card("0", CardColor);
-                                    player2.getCards().remove(chosenCard);
-                                    turn = player1;
+                                    if(CardColor=="Red" || CardColor=="Green" || CardColor=="Blue" || CardColor=="Yellow"){
+                                        CardInCenter = new Card("0", CardColor);
+                                        player2.getCards().remove(chosenCard);
+                                        turn = player1;
+                                    }
+                                    else{
+                                        System.out.println("This is not a valid color");
+                                    }
                                 }
                                 else if (chosenCard.getType() == "+4") {
                                     Scanner color = new Scanner(System.in);
                                     System.out.println("Choose the color (Red,Green,Blue,Yellow");
                                     String CardColor = color.nextLine();
-                                    CardInCenter = new Card("0", CardColor);
-                                    cardsForOpponent = 4;
-                                    player2.getCards().remove(chosenCard);
-                                    turn = player1;
+                                    if(CardColor=="Red" || CardColor=="Green" || CardColor=="Blue" || CardColor=="Yellow"){
+                                        CardInCenter = new Card("0", CardColor);
+                                        player2.getCards().remove(chosenCard);
+                                        cardsForOpponent+=4;
+                                        turn = player1;
+                                    }
+                                    else{
+                                        System.out.println("This is not a valid color");
+                                    }
                                 }
 
                             }
