@@ -11,7 +11,8 @@ public class Main {
     }
     public static void main(String[] args) {
         int cardsForOpponent=0;
-        int blockForOpponent=0;
+        int blocksForP1=0;
+        int blocksForP2=0;
         Player player1 = new Player("Kuba");
         Player player2 = new Player("Grzesiu");
         Card card = new Card("pies", "pies");
@@ -46,8 +47,8 @@ public class Main {
             }
             else if (turn == player1) {
                 System.out.println("The card in the center is: " + CardInCenter);
-                if(blockForOpponent!=0){
-                    System.out.println("It's the turn of: " + player1.getName() + " you have been blocked for: " + blockForOpponent + " turns");
+                if(blocksForP1!=0){
+                    System.out.println("It's the turn of: " + player1.getName() + " you have been blocked for: " + blocksForP1 + " turns");
                     Scanner scan = new Scanner(System.in);
                     System.out.println("Choose your card (type in 2137  if you dont have or dont want to use your block type in: 2137)");
                     print_hand(player1.getCards());
@@ -55,7 +56,7 @@ public class Main {
                     whichCard--;
                     if(whichCard==2136) {
                         turn = player2;
-                        blockForOpponent--;
+                        blocksForP1--;
                     }
                     else if(whichCard+1>player1.getCards().size()){
                         System.out.println("You only have: " + player1.getCards().size() + " cards!");
@@ -64,7 +65,9 @@ public class Main {
                             Card chosenCard = player1.getCards().get(whichCard);
                             if (chosenCard.getType() == "Block") {
                                 CardInCenter = chosenCard;
-                                blockForOpponent++;
+                                blocksForP2=blocksForP1;
+                                blocksForP2++;
+                                blocksForP1=0;
                                 turn = player2;
                             }
                             else if (player1.getCards().get(whichCard).getType() != "Block") {
@@ -175,7 +178,7 @@ public class Main {
                                 turn = player2;
                             }
                             else if (chosenCard.getType()=="Block") {
-                                blockForOpponent++;
+                                blocksForP2++;
                                 CardInCenter = chosenCard;
                                 player1.getCards().remove(chosenCard);
                                 turn = player2;
@@ -198,15 +201,15 @@ public class Main {
             }
             else if(turn==player2){
                 System.out.println("The card in the center is: " + CardInCenter);
-                if(blockForOpponent!=0){
-                    System.out.println("It's the turn of: " + player2.getName() + " you have been blocked for: " + blockForOpponent + " turns, if you dont have or dont want to use your block type in: 2137");
+                if(blocksForP2!=0){
+                    System.out.println("It's the turn of: " + player2.getName() + " you have been blocked for: " + blocksForP2 + " turns, if you dont have or dont want to use your block type in: 2137");
                     Scanner scan = new Scanner(System.in);
                     System.out.println("Choose your card (type in 2137 if you dont have/dont want to use your + cards)");
                     print_hand(player2.getCards());
                     int whichCard = scan.nextInt();
                     whichCard--;
                     if(whichCard==2136){
-                        blockForOpponent--;
+                        blocksForP2--;
                         turn=player1;
                     }
                     else if(whichCard+1>player2.getCards().size()){
@@ -216,7 +219,9 @@ public class Main {
                         Card chosenCard = player2.getCards().get(whichCard);
                         if (chosenCard.getType() == "Block") {
                             CardInCenter = chosenCard;
-                            blockForOpponent++;
+                            blocksForP1=blocksForP2;
+                            blocksForP1++;
+                            blocksForP2=0;
                             turn = player1;
                         } else if (player2.getCards().get(whichCard).getType() != "Block") {
                             System.out.println("This is not a card you can use!");
@@ -326,7 +331,7 @@ public class Main {
                                 turn = player1;
                             }
                             else if (chosenCard.getType()=="Block") {
-                                blockForOpponent++;
+                                blocksForP1++;
                                 CardInCenter = chosenCard;
                                 player2.getCards().remove(chosenCard);
                                 turn = player1;
