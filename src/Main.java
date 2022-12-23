@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 import java.util.SortedMap;
+import java.util.*;
 
 public class Main {
     public static void print_hand(ArrayList<Card> Cards){
@@ -10,6 +12,11 @@ public class Main {
         }
     }
     public static void main(String[] args) {
+        ArrayList<String> GoodColors = new ArrayList<String>();
+        GoodColors.add("Green");
+        GoodColors.add("Yellow");
+        GoodColors.add("Red");
+        GoodColors.add("Blue");
         int cardsForOpponent=0;
         int blocksForP1=0;
         int blocksForP2=0;
@@ -18,6 +25,7 @@ public class Main {
         Card card = new Card("pies", "pies");
         card.fillDeck(card.getDeck());
         ArrayList<Card> Deck = card.getDeck();
+        Collections.shuffle(Deck);
         Player turn = player1;
         player1.giveCards(Deck, player1);
         player2.giveCards(Deck, player2);
@@ -36,6 +44,7 @@ public class Main {
         while (true) {
             if(Deck.size()==0){
                 card.fillDeck(Deck);
+                Collections.shuffle(Deck);
             }
             if(player1.getCards().size()==0){
                 System.out.println(player1.getName() + " Wins!");
@@ -83,13 +92,41 @@ public class Main {
                     int whichCard = scan.nextInt();
                     whichCard--;
                     if(whichCard==2136){
-                        while (cardsForOpponent!=0){
-                            int cardId2 = (int)(Math.random() * Deck.size());
-                            player1.getCards().add(Deck.get(cardId2));
-                            Deck.remove(Deck.get(cardId2));
-                            cardsForOpponent--;
+                        Card save = Deck.get(0);
+                        player1.getCards().add(Deck.get(0));
+                        Deck.remove(Deck.get(0));
+                        cardsForOpponent--;
+                        if(Deck.get(0).getType()=="+2"){
+                            System.out.println("You got a +2 card! All of the cards for you will be transferred to the opponent with the additional 2 you just drew");
+                            cardsForOpponent+=2;
+                            CardInCenter = new Card("+2",save.getColor());
+                            turn=player2;
                         }
-                        turn=player2;
+                        else if(Deck.get(0).getType()=="+4") {
+                            while(true){
+                                System.out.println("You got a +4 card! All of the cards for you will be transferred to the opponent with the additional 2 you just drew");
+                                System.out.println("Choose your color");
+                                Scanner scanner = new Scanner(System.in);
+                                String color = scanner.nextLine();
+                                if(GoodColors.contains(color)){
+                                    CardInCenter = new Card("0",color);
+                                    turn = player2;
+                                    cardsForOpponent+=4;
+                                    break;
+                                }
+                                else{
+                                    System.out.println("This is not a valid color");
+                                }
+                            }
+                        }
+                        else{
+                            while (cardsForOpponent!=0){
+                                player1.getCards().add(Deck.get(0));
+                                Deck.remove(Deck.get(0));
+                                cardsForOpponent--;
+                            }
+                            turn=player2;
+                        }
                     }
                     else if(whichCard+1>player1.getCards().size()){
                         System.out.println("You only have: " + player1.getCards().size() + " cards!");
@@ -131,9 +168,8 @@ public class Main {
                     int whichCard = scan.nextInt();
                     whichCard--;
                     if (whichCard == 2136) {
-                        int cardId2 = (int)(Math.random() * Deck.size());
-                        player1.getCards().add(Deck.get(cardId2));
-                        Deck.remove(Deck.get(cardId2));
+                        player1.getCards().add(Deck.get(0));
+                        Deck.remove(Deck.get(0));
                         turn = player2;
                     }
                     else if(whichCard+1>player1.getCards().size()){
@@ -235,14 +271,40 @@ public class Main {
                     print_hand(player2.getCards());
                     int whichCard = scan.nextInt();
                     whichCard--;
-                    if(whichCard==2136){
-                        while (cardsForOpponent!=0){
-                            int cardId2 = (int)(Math.random() * Deck.size());
-                            player2.getCards().add(Deck.get(cardId2));
-                            Deck.remove(Deck.get(cardId2));
-                            cardsForOpponent--;
+                    if(whichCard==2136) {
+                        Card save = Deck.get(0);
+                        player2.getCards().add(Deck.get(0));
+                        Deck.remove(Deck.get(0));
+                        cardsForOpponent--;
+                        if (save.getType() == "+2") {
+                            System.out.println("You got a +2 card! All of the cards for you will be transferred to the opponent with the additional 2 you just drew");
+                            cardsForOpponent += 2;
+                            CardInCenter = new Card("+2", save.getColor());
+                            turn = player1;
+                        } else if (save.getType() == "+4") {
+                            while (true) {
+                                System.out.println("You got a +4 card! All of the cards for you will be transferred to the opponent with the additional 2 you just drew");
+                                System.out.println("Choose your color");
+                                Scanner scanner = new Scanner(System.in);
+                                String color = scanner.nextLine();
+                                if (GoodColors.contains(color)) {
+                                    CardInCenter = new Card("0", color);
+                                    turn = player1;
+                                    cardsForOpponent += 4;
+                                    break;
+                                } else {
+                                    System.out.println("This is not a valid color");
+                                }
+                            }
                         }
-                        turn = player1;
+                        else {
+                            while (cardsForOpponent != 0) {
+                                player1.getCards().add(Deck.get(0));
+                                Deck.remove(Deck.get(0));
+                                cardsForOpponent--;
+                            }
+                            turn = player2;
+                        }
                     }
                     else if(whichCard+1>player2.getCards().size()){
                         System.out.println("You only have: " + player2.getCards().size() + " cards!");
@@ -283,9 +345,8 @@ public class Main {
                     int whichCard = scan.nextInt();
                     whichCard--;
                     if(whichCard==2136){
-                        int cardId2 = (int)(Math.random() * Deck.size());
-                        player2.getCards().add(Deck.get(cardId2));
-                        Deck.remove(Deck.get(cardId2));
+                        player2.getCards().add(Deck.get(0));
+                        Deck.remove(Deck.get(0));
                         turn = player1;
                     }
                     else if(whichCard+1>player2.getCards().size()){
